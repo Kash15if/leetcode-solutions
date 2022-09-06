@@ -1,30 +1,40 @@
+// Using greedy approach
+
 /**
  * @param {number[]} nums
- * @return {number}
+ * @return {boolean}
  */
-var jump = function (nums) {
+var canJump = function (nums) {
   let n = nums.length;
-  return getMinJump(nums, 0, 0, n);
-};
 
-var getMinJump = function (nums, i, count, n) {
-  // console.log(i, count)
-  if (i >= n - 1) {
-    return count;
-  } else {
-    let nextCt = 100000;
+  let l = 0,
+    r = 0;
 
-    for (let j = i; j < n - nums[i]; j++) {
-      let thisVal = getMinJump(nums, j, count + 1, n);
+  while (r < n - 1) {
+    let maxDist = 0;
 
-      if (nextCt > thisVal) {
-        nextCt = thisVal;
+    while (l < r + 1) {
+      maxDist = Math.max(maxDist, l + nums[l]);
+      if (maxDist >= n - 1) {
+        return true;
       }
-      console.log(thisVal);
+
+      l++;
     }
 
-    if (nextCt !== 100000) count += nextCt;
+    //check if it goes beyond the farthest border or not
+    if (maxDist <= r) {
+      return false;
+    }
+
+    //set left boundary next to right, since all the element betweeen the ranges are being covered
+    l = r + 1;
+    r = maxDist;
   }
 
-  return count;
+  //check r went to the last index or not
+  if (r >= n - 1) {
+    return true;
+  }
+  return false;
 };
