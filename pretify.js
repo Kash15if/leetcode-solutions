@@ -8,7 +8,7 @@ var longestCommonSubsequence = function (text1, text2) {
     let m = text1.length, n = text2.length;
     let dp = new Array(m).fill(-1).map(row => new Array(n).fill(-1));
 
-    // return rec(text1, text2 , m , n , 0 , 0 ,dp)
+    // return memoize(text1, text2 , m , n , 0 , 0 ,dp)
     return tabular(text1, text2, m, n, 0, 0);
 };
 
@@ -35,7 +35,7 @@ function tabular(text1, text2, m, n, i, j) {
 
 
 
-function rec(text1, text2, m, n, i, j, dp) {
+function memoize(text1, text2, m, n, i, j, dp) {
 
     if (i >= m || j >= n) {
         return 0;
@@ -45,10 +45,10 @@ function rec(text1, text2, m, n, i, j, dp) {
     if (dp[i][j] != -1)
         return dp[i][j];
 
-    let res = Math.max(rec(text1, text2, m, n, i + 1, j, dp), rec(text1, text2, m, n, i, j + 1, dp));
+    let res = Math.max(memoize(text1, text2, m, n, i + 1, j, dp), memoize(text1, text2, m, n, i, j + 1, dp));
 
     if (text1[i] == text2[j]) {
-        res = Math.max(rec(text1, text2, m, n, i + 1, j + 1, dp) + 1, res);
+        res = Math.max(memoize(text1, text2, m, n, i + 1, j + 1, dp) + 1, res);
     }
 
     dp[i][j] = res
