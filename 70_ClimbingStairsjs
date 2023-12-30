@@ -1,0 +1,47 @@
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function (n) {
+
+    let dp = new Array(n + 1).fill(-1);
+    // return memoize(n, dp);
+    return tabular(n)
+
+};
+
+
+function tabular(n) {
+
+    let dp = new Array(n + 1).fill(0);
+    dp[0] = 1;
+
+    for (let i = 1; i <= n; i++) {
+        let ct = 0;
+        if (i >= 2) {
+            ct += dp[i - 2];
+        }
+        if (i >= 1)
+            ct += dp[i - 1];
+        dp[i] = ct;
+    }
+    return dp[n]
+}
+
+
+
+function memoize(n, dp) {
+    if (n < 0) {
+        return 0;
+    }
+    if (n == 0) {
+        return 1;
+    }
+    if (dp[n] != -1)
+        return dp[n];
+    dp[n] = climbStairs(n - 1, dp) + climbStairs(n - 2, dp);
+    return dp[n];
+}
+
+
+
