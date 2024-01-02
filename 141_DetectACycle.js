@@ -1,0 +1,30 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+
+
+var hasCycle = function (head) {
+
+    if (head == null)
+        return false;
+    return detectCycle(head.next, head)
+};
+
+
+function detectCycle(fast, slow) {
+    if (fast == null || fast.next == null)
+        return false;
+    if (fast == slow)
+        return true;
+
+    return detectCycle(fast.next.next, slow.next)
+}
