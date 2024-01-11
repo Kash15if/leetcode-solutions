@@ -1,0 +1,61 @@
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var search = function (nums, target) {
+
+    let n = nums.length
+    let i = 0, j = n - 1;
+
+    //getting the min/pivot
+    while (i < j) {
+        let mid = Math.floor((i + j) / 2);
+        // Compare the mid element with the previous element
+        if (nums[j] > nums[mid]) {
+            j = mid;
+        } else {
+            i = mid + 1;
+        }
+    }
+
+
+    //this is pivot or min val, in the let and right both val is sorted now
+    let pivot = i;
+    i = 0; j = pivot - 1
+
+    // checking that there is no rotation and pivot is at 0
+    //using binary sort from 0 to pivot - 1 since it is sorted
+    if (j >= 0)
+        while (i <= j) {
+
+            let mid = Math.floor((i + j) / 2);
+
+            if (nums[mid] == target)
+                return mid;
+            if (nums[mid] < target)
+                i = mid + 1;
+            else
+                j = mid - 1;
+
+        }
+
+    //not doing binary search from pivot to n-1
+    i = pivot, j = n - 1
+
+    // checking that there is n rotation and pivot is at n-1
+    //using binary sort from pivot to n - 1 since it is sorted as well
+    if (i < n)
+        while (i <= j) {
+            let mid = Math.floor((i + j) / 2);
+
+            if (nums[mid] == target)
+                return mid;
+            if (nums[mid] < target)
+                i = mid + 1;
+            else
+                j = mid - 1;
+        }
+
+    return -1;
+};
