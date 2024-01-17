@@ -1,56 +1,65 @@
-/**
- * @param {string} text1
- * @param {string} text2
- * @return {number}
- */
-var longestCommonSubsequence = function (text1, text2) {
 
-    let m = text1.length, n = text2.length;
-    let dp = new Array(m).fill(-1).map(row => new Array(n).fill(-1));
+var TreeNode = function()  {
+    return { 
+    children : {},
+    isEndOfWord : false,
+    }
+}
 
-    // return memoize(text1, text2 , m , n , 0 , 0 ,dp)
-    return tabular(text1, text2, m, n, 0, 0);
+
+
+var Trie = function() {
 };
 
-
-
-function tabular(text1, text2, m, n, i, j) {
-
-    let dp = new Array(m + 1).fill(0).map(row => new Array(n + 1).fill(0));
-
-    for (let i = m - 1; i >= 0; i--) {
-        for (let j = n - 1; j >= 0; j--) {
-            let max = Math.max(dp[i + 1][j], dp[i][j + 1]);
-
-            if (text1[i] == text2[j])
-                max = Math.max(max, dp[i + 1][j + 1] + 1)
-
-            dp[i][j] = max;
-
+/** 
+ * @param {string} word
+ * @return {void}
+ */
+Trie.prototype.insert = function(word) {
+    
+    for(let i = 0 ;i < word.length ; i++){
+        if(!trie.children[word[i]]){
+            trie.children[word[i]] = new TreeNode();
         }
+        
+        trie = trie.children[word[i]]
     }
+    
+    tree.endOfWord = true;
+};
 
-    return dp[0][0]
-}
+/** 
+ * @param {string} word
+ * @return {boolean}
+ */
 
 
-
-function memoize(text1, text2, m, n, i, j, dp) {
-
-    if (i >= m || j >= n) {
-        return 0;
+Trie.prototype.search = function(word) {
+    
+   for(let i = 0 ;i < word.length ; i++){
+        if(!trie.children[word[i]]){
+            return false;
+        }
+        
+        trie = trie.children[word[i]]
     }
+    
+    return trie.endOfWord;
+    
+};
 
+/** 
+ * @param {string} prefix
+ * @return {boolean}
+ */
+Trie.prototype.startsWith = function(prefix) {
+    return trie.children[prefix[i]] ? true : false;
+};
 
-    if (dp[i][j] != -1)
-        return dp[i][j];
-
-    let res = Math.max(memoize(text1, text2, m, n, i + 1, j, dp), memoize(text1, text2, m, n, i, j + 1, dp));
-
-    if (text1[i] == text2[j]) {
-        res = Math.max(memoize(text1, text2, m, n, i + 1, j + 1, dp) + 1, res);
-    }
-
-    dp[i][j] = res
-    return dp[i][j];
-}
+/** 
+ * Your Trie object will be instantiated and called as such:
+ * var obj = new Trie()
+ * obj.insert(word)
+ * var param_2 = obj.search(word)
+ * var param_3 = obj.startsWith(prefix)
+ */
