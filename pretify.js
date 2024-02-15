@@ -1,30 +1,30 @@
 
-var TreeNode = function()  {
-    return { 
-    children : {},
-    isEndOfWord : false,
+var TreeNode = function () {
+    return {
+        children: {},
+        isEndOfWord: false,
     }
 }
 
 
 
-var Trie = function() {
+var Trie = function () {
 };
 
 /** 
  * @param {string} word
  * @return {void}
  */
-Trie.prototype.insert = function(word) {
-    
-    for(let i = 0 ;i < word.length ; i++){
-        if(!trie.children[word[i]]){
+Trie.prototype.insert = function (word) {
+
+    for (let i = 0; i < word.length; i++) {
+        if (!trie.children[word[i]]) {
             trie.children[word[i]] = new TreeNode();
         }
-        
+
         trie = trie.children[word[i]]
     }
-    
+
     tree.endOfWord = true;
 };
 
@@ -34,25 +34,25 @@ Trie.prototype.insert = function(word) {
  */
 
 
-Trie.prototype.search = function(word) {
-    
-   for(let i = 0 ;i < word.length ; i++){
-        if(!trie.children[word[i]]){
+Trie.prototype.search = function (word) {
+
+    for (let i = 0; i < word.length; i++) {
+        if (!trie.children[word[i]]) {
             return false;
         }
-        
+
         trie = trie.children[word[i]]
     }
-    
+
     return trie.endOfWord;
-    
+
 };
 
 /** 
  * @param {string} prefix
  * @return {boolean}
  */
-Trie.prototype.startsWith = function(prefix) {
+Trie.prototype.startsWith = function (prefix) {
     return trie.children[prefix[i]] ? true : false;
 };
 
