@@ -84,3 +84,28 @@ export function useApi({ url, method = 'GET', body = null, headers = {} }) {
 
   return { data, loading, error, status };
 }
+
+
+const debounce = (fun, delay=500)=>{
+    let timeout;
+    return function(...args){
+        clearTimeout(timeout);
+        setTimeout(()=>{
+            fun.apply(this, args);
+        }, delay);
+    }
+}
+
+
+
+const throttle = (fun, delay=500)=>{
+    let lastTime = 0;
+    return function(...args){
+        let now = neq Date().now();
+        if(now() - lastTime >= delay){
+            fun.apply(this, args);
+            lastTime = now;
+        }
+        
+    }
+}
